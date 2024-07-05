@@ -1,0 +1,50 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/book_social_network
+    username: user
+    password: secret
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    database: postgresql
+  mail:
+    host: localhost
+    port: 1025
+    username: rio
+    password: rio
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+
+application:
+  security:
+    jwt:
+      secret-key: 46lhi2V4F6j3Qji2MYXhR1GGeQoPwgcEjHLV4IMucy84ud07Q7TywbX5
+      expiration: 8640000
+  mailing:
+    from: noreply@reeo.com
+    frontend:
+      confirmation-url: http://localhost:4200/activate?t=
+
+logging:
+  level:
+    org.springframework.security: TRACE
+
+server:
+  port: 8080
+
+junit:
+  jupiter:
+    execution.parallel.enabled: true
