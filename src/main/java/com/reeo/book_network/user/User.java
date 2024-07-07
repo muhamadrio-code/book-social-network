@@ -65,6 +65,10 @@ public class User implements UserDetails, Principal {
     return firstName + " " + lastName;
   }
 
+  public void setEnable() {
+    this.enabled = true;
+  }
+
   @Override
   public String getName() {
     return email;
