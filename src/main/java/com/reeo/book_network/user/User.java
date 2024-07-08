@@ -29,7 +29,7 @@ public class User implements UserDetails, Principal {
 
   @Id
   @GeneratedValue
-  private long id;
+  private Integer id;
 
   @Column(name = "first_name", nullable = false)
   private String firstName;

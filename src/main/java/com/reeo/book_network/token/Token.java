@@ -20,7 +20,7 @@ public class Token {
 
   @Id
   @GeneratedValue
-  private long id;
+  private Integer id;
 
   @Column(unique = true, name = "token", nullable = false)
   private String token;

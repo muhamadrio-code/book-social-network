@@ -23,7 +23,7 @@ public class Role {
 
   @Id
   @GeneratedValue
-  private long id;
+  private Integer id;
 
   @Column(name = "name", nullable = false, unique = true)
   private String name;
