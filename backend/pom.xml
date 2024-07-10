@@ -9,7 +9,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.reeo</groupId>
-  <artifactId>book-network</artifactId>
+  <artifactId>backend</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>book-network-api</name>
   <description>Spring Boot project for Book Social Network</description>
