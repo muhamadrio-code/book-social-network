@@ -26,7 +26,7 @@ public class FeedbackController {
         .ok(service.save(request, (User) authentication.getPrincipal()));
   }
 
-  @PostMapping("/book/{book-id}")
+  @GetMapping("/book/{book-id}")
   ResponseEntity<?> findFeeddbackByBook(
       @RequestParam(value = "page", defaultValue = "0") int page,
       @RequestParam(value = "size", defaultValue = "10") int size,

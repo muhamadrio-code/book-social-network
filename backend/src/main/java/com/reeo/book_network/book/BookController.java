@@ -27,14 +27,14 @@ public class BookController {
     return ResponseEntity.ok(savedBookId);
   }
 
-  @PostMapping("/{book-id}")
+  @GetMapping("/{book-id}")
   ResponseEntity<BookResponse> findBookById(
       @PathVariable("book-id") Integer bookId
   ) {
     return ResponseEntity.ok(service.findById(bookId));
   }
 
-  @PostMapping
+  @GetMapping
   ResponseEntity<PageResponse<BookResponse>> findAllBooks(
       @RequestParam(value = "page", defaultValue = "0") int page,
       @RequestParam(value = "size", defaultValue = "10") int size,
@@ -44,7 +44,7 @@ public class BookController {
         .ok(service.findAllBooks(page, size, (User) authentication.getPrincipal()));
   }
 
-  @PostMapping("/owner")
+  @GetMapping("/owner")
   ResponseEntity<PageResponse<BookResponse>> findAllBooksByOwner(
       @RequestParam(value = "page", defaultValue = "0") int page,
       @RequestParam(value = "size", defaultValue = "10") int size,
@@ -54,7 +54,7 @@ public class BookController {
         .ok(service.findAllBooksByOwner(page, size, (User) authentication.getPrincipal()));
   }
 
-  @PostMapping("/borrowed")
+  @GetMapping("/borrowed")
   ResponseEntity<PageResponse<BorrowedBookResponse>> findAllBorrowedBooks(
       @RequestParam(value = "page", defaultValue = "0") int page,
       @RequestParam(value = "size", defaultValue = "10") int size,
@@ -64,7 +64,7 @@ public class BookController {
         .ok(service.findAllBorrowedBook(page, size, (User) authentication.getPrincipal()));
   }
 
-  @PostMapping("/returned")
+  @GetMapping("/returned")
   ResponseEntity<PageResponse<BorrowedBookResponse>> findAllReturnedBooks(
       @RequestParam(value = "page", defaultValue = "0") int page,
       @RequestParam(value = "size", defaultValue = "10") int size,
