@@ -83,6 +83,8 @@ public class AuthenticationService {
 
     user.setEnable();
     userRepository.save(user);
+    validatedToken.setVerifiedAt(LocalDateTime.now());
+    tokenRepository.save(validatedToken);
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {

@@ -2,10 +2,7 @@ package com.reeo.book_network.token;
 
 import com.reeo.book_network.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -33,6 +30,7 @@ public class Token {
   private LocalDateTime expiredAt;
 
   @Column(name = "verified_at")
+  @Setter
   private LocalDateTime verifiedAt;
 
   @ManyToOne
