@@ -1,6 +1,7 @@
 package com.reeo.book_network.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.reeo.book_network.history.BookTransactionsHistory;
 import com.reeo.book_network.role.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -60,6 +61,9 @@ public class User implements UserDetails, Principal {
   @LastModifiedDate
   @Column(name = "last_modified_date", insertable = false)
   private LocalDateTime lastModifiedDate;
+
+  @OneToMany(mappedBy = "user")
+  private List<BookTransactionsHistory> bookTransactionsHistories;
 
   public String getFullname() {
     return firstName + " " + lastName;

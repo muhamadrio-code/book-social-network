@@ -41,6 +41,9 @@ application:
     from: noreply@reeo.com
     frontend:
       confirmation-url: http://localhost:4200/activate?t=
+  file:
+    uploads:
+      photos-output-path: ./uploads
 
 logging:
   level:
