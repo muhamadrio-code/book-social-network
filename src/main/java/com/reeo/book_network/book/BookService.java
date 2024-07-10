@@ -1,6 +1,7 @@
 package com.reeo.book_network.book;
 
 import com.reeo.book_network.common.AuditableEntity;
+import com.reeo.book_network.common.PageResponse;
 import com.reeo.book_network.exception.BookNotFoundException;
 import com.reeo.book_network.exception.OperationNotPermittedException;
 import com.reeo.book_network.file.FileStorageService;

@@ -1,5 +1,6 @@
 package com.reeo.book_network.book;
 
+import com.reeo.book_network.common.PageResponse;
 import com.reeo.book_network.user.User;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
