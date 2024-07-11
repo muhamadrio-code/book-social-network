@@ -3,6 +3,7 @@ package com.reeo.book_network.book;
 import com.reeo.book_network.common.PageResponse;
 import com.reeo.book_network.user.User;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class BookController {
 
   @PostMapping
   ResponseEntity<?> saveBook(
-      SaveBookRequest request,
+      @RequestBody @Valid SaveBookRequest request,
       Authentication authentication
   ) {
     Integer savedBookId = service.save(request, (User) authentication.getPrincipal());

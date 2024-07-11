@@ -1,5 +1,6 @@
 package com.reeo.book_network.book;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -21,8 +22,8 @@ public class SaveBookRequest {
   @NotNull
   @NotEmpty
   private String synopsis;
-  @NotNull
-  @NotEmpty
+
+  @NotBlank
   private String bookCover;
   @NotNull
   private boolean shareable;

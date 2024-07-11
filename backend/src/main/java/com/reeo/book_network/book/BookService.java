@@ -32,7 +32,6 @@ public class BookService {
   public Integer save(SaveBookRequest request, User owner) {
     final Book book = bookMapper.toBook(request);
     book.setOwner(owner);
-    book.setCreatedBy(owner.getId());
 
     return bookMapper.toResponse(
         bookRepository.save(book)

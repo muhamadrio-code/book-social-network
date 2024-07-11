@@ -6,9 +6,11 @@ import com.reeo.book_network.exception.ResourceNotFoundException;
 import com.reeo.book_network.exception.TokenExpiredException;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -114,8 +116,8 @@ public class GlobalExceptionHandler {
     Set<String> errors = new HashSet<>();
     exp.getBindingResult().getAllErrors()
         .forEach(error -> {
-          //var fieldName = ((FieldError) error).getField();
-          var errorMessage = error.getDefaultMessage();
+          var fieldName = ((FieldError) error).getField();
+          var errorMessage = fieldName + " " + error.getDefaultMessage();
           errors.add(errorMessage);
         });
 
@@ -129,6 +131,19 @@ public class GlobalExceptionHandler {
   }
 
   @SuppressWarnings("CallToPrintStackTrace")
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public ResponseEntity<ExceptionResponse> handleException(HttpMessageNotReadableException exp) {
+    exp.printStackTrace();
+    return ResponseEntity
+        .status(BAD_REQUEST)
+        .body(
+            ExceptionResponse.builder()
+                .businessErrorDescription(BAD_REQUEST.getReasonPhrase())
+                .error("Required request body is missing")
+                .build()
+        );
+  }
+
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ExceptionResponse> handleException(Exception exp) {
     exp.printStackTrace();
@@ -137,7 +152,6 @@ public class GlobalExceptionHandler {
         .body(
             ExceptionResponse.builder()
                 .businessErrorDescription("Internal error, please contact the admin")
-                .error(exp.getMessage())
                 .build()
         );
   }
