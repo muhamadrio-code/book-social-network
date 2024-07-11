@@ -6,10 +6,11 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.servers.Server;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 @OpenAPIDefinition(
     info = @Info(
         contact = @Contact(
@@ -35,17 +36,12 @@ import io.swagger.v3.oas.annotations.servers.Server;
             description = "Prod ENV",
             url = "https://example.com/"
         )
-    },
-    security = {
-        @SecurityRequirement(
-            name = "BearerAuth"
-        )
     }
 )
 @SecurityScheme(
     name = "BearerAuth",
     description = "JWT auth security",
-    scheme = "Bearer",
+    scheme = "bearer",
     type = SecuritySchemeType.HTTP,
     in = SecuritySchemeIn.HEADER,
     bearerFormat = "JWT"

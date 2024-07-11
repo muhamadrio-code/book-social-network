@@ -1,5 +1,6 @@
 package com.reeo.book_network.auth;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
@@ -15,6 +16,10 @@ public class AuthenticationController {
   @Autowired
   private AuthenticationService authenticationService;
 
+  @Operation(
+      security = {},
+      summary = "Public endpoint"
+  )
   @PostMapping(
       path = "/register"
   )
@@ -25,6 +30,10 @@ public class AuthenticationController {
     return ResponseEntity.accepted().build();
   }
 
+  @Operation(
+      security = {},
+      summary = "Public endpoint"
+  )
   @PostMapping(path = "/activate")
   ResponseEntity<?> activate(
       @RequestParam String token
@@ -33,6 +42,10 @@ public class AuthenticationController {
     return ResponseEntity.ok().build();
   }
 
+  @Operation(
+      security = {},
+      summary = "Public endpoint"
+  )
   @PostMapping(path = "/sign-in")
   @ResponseBody
   AuthenticationResponse signin(
