@@ -10,7 +10,6 @@ public class BookMapper {
     return Book.builder()
         .title(request.getTitle())
         .authorName(request.getAuthorName())
-        .bookCover(request.getBookCover())
         .synopsis(request.getSynopsis())
         .isbn(request.getIsbn())
         .shareable(request.isShareable())

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Feedback")
-@RequestMapping("feedback")
+@RequestMapping("feedbacks")
 public class FeedbackController {
 
   private final FeedbackService service;

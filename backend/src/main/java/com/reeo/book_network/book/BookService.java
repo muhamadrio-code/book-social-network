@@ -135,7 +135,7 @@ public class BookService {
       );
     }
     BookTransactionsHistory lastTransaction = getBookLastTransactionHistory(book);
-    if (lastTransaction.isReturned() || !lastTransaction.isReturnApproved()) {
+    if (lastTransaction.isReturned()) {
       throw new OperationNotPermittedException(
           "You already returned the Book or Book returned is not approved yet"
       );

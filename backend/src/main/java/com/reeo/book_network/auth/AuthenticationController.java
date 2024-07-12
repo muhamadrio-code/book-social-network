@@ -34,7 +34,7 @@ public class AuthenticationController {
       security = {},
       summary = "Public endpoint"
   )
-  @PostMapping(path = "/activate")
+  @GetMapping(path = "/activate-account")
   ResponseEntity<?> activate(
       @RequestParam String token
   ) {
@@ -46,7 +46,7 @@ public class AuthenticationController {
       security = {},
       summary = "Public endpoint"
   )
-  @PostMapping(path = "/sign-in")
+  @PostMapping(path = "/authenticate")
   @ResponseBody
   AuthenticationResponse signin(
       @RequestBody AuthenticationRequest request
