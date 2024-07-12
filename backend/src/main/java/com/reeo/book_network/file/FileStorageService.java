@@ -42,9 +42,9 @@ public class FileStorageService {
     File targetFolder = new File(finalPath);
 
     if (!targetFolder.exists()) {
-      boolean folderCreated = targetFolder.mkdir();
+      boolean folderCreated = targetFolder.mkdirs();
       if (!folderCreated) {
-        log.warn("Failed to create the target folder: " + targetFolder);
+        log.error("Failed to create the target folder: " + targetFolder);
         return null;
       }
     }
