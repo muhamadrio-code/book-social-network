@@ -1,4 +1,4 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
 /dist
@@ -27,7 +27,6 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
-.vscode
 
 # Miscellaneous
 /.angular/cache
@@ -41,5 +40,3 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-
-openapi
