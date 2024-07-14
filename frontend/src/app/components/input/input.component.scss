@@ -1,0 +1,50 @@
+// .input-box {
+//   height: 64px;
+//   position: relative;
+//   z-index: 12;
+//   input {
+//     background-color: transparent;
+//     padding: 8px 16px;
+//     outline: none;
+//     box-shadow: none;
+//     border: none;
+//     border-bottom: 1px solid rgb(168, 168, 168);
+//     transition: border linear 0.2s;
+//   }
+
+//   input:focus {
+//     border-bottom: 2px solid black;
+//   }
+
+//   .label {
+//     left: 16px;
+//     top: 12px;
+//     position: absolute;
+//     transition: 0.5s;
+//     opacity: 0.3;
+//     display: flex;
+//     justify-content: start;
+//     align-items: center;
+//     font-size: small;
+//     gap: 8px;
+//     font-weight: 900;
+//     text-transform: uppercase;
+//     z-index: -1;
+//   }
+
+//   input:focus ~ .label,
+//   input:not(:placeholder-shown) ~ .label {
+//     font-size: x-small;
+//     transform: translateY(-24px);
+//     opacity: 0.8;
+//   }
+
+//   input:invalid:not(:placeholder-shown):not(:focus),
+//   input:invalid:not(:placeholder-shown):not(:focus) ~ .label {
+//     color: rgb(202, 1, 1);
+//   }
+
+//   .pw:invalid:not(:placeholder-shown):not(:focus) {
+//     border-bottom: 2px solid red;
+//   }
+// }

@@ -1,0 +1,32 @@
+.wrapper {
+  width: 100wh;
+  height: 100vh;
+  position: relative;
+  left: 0;
+  top: 0;
+  background-color: aliceblue;
+}
+
+.sub-container {
+  height: clamp(300px, 50%, 400px);
+  position: absolute;
+  inset: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--dim-lg);
+  padding: var(--dim-lg);
+  box-shadow: 5px 5px 10px 5px #9b9b9b3d;
+
+  i {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(44, 44, 44, 0.267);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: fill;
+  }
+}

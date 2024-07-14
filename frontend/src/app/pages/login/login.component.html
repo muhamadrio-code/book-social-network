@@ -1,0 +1,39 @@
+<div class="wrapper">
+  <div class="main-container">
+    <div class="form-group">
+      <h2>Login</h2>
+      <form action="get" class="form-container">
+        <app-input
+          type="email"
+          icon="fas fa-envelope"
+          label="email"
+          [(ngModel)]="authRequest.email"
+          name="email"
+        ></app-input>
+        <app-input
+          type="password"
+          icon="fas fa-lock"
+          label="password"
+          name="password"
+          [(ngModel)]="authRequest.password"
+        ></app-input>
+        <button (click)="login()" class="login-btn" type="submit">login</button>
+      </form>
+      <div class="opt-group">
+        <div class="remember-me">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="remember-me"
+            value="remember me"
+          />
+          <label class="form-check-label" for="remember-me">remember me</label>
+        </div>
+        <a class="fgt-pw">lupa password</a>
+      </div>
+    </div>
+    <div class="img-container">
+      <a href="register">Sign Up</a>
+    </div>
+  </div>
+</div>
