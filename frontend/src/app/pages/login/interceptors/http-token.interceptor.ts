@@ -20,7 +20,6 @@ export class HttpTokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const token = this.tokenService.token;
-    console.log('=======INTERCEPT');
 
     if (!token) {
       const newReq = req.clone({
