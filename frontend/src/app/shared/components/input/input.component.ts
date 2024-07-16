@@ -1,10 +1,6 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-  NgModel,
-} from '@angular/forms';
-import { NgModelBase } from '../helper/NgModelBase';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NgModelBase } from '../NgModelBase';
 
 @Component({
   selector: 'app-input',
