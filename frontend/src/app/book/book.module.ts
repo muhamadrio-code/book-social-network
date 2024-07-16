@@ -5,7 +5,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { BookCardComponent } from './components/book-card/book-card.component';
 import { RatingComponent } from './components/rating/rating.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
-import { RatingPipe } from '../utils/rating.pipe';
+import { RatingPipe } from './components/rating/rating.pipe';
 import { PagerComponent } from './components/pager/pager.component';
 import { RangePipe } from '../utils/range.pipe';
 import { BookHomeComponent } from './pages/book-home/book-home.component';
