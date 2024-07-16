@@ -3,9 +3,9 @@
     <ul class="list-unstyled d-flex gap-2 m-0 p-0 pagination">
       <li (click)="prevPage()" class="previous">&laquo;</li>
       <li
-        *ngFor="let page of pages"
+        *ngFor="let page of pages; let i = index"
         [class.active]="currentPage === page"
-        (click)="setSelected(page)"
+        (click)="setSelected(i)"
       >
         {{ page }}
       </li>

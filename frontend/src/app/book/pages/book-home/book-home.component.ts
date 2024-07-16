@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Perform } from 'src/app/utils/perform';
 import { BookService } from '../../book.service';
 import { PageResponseBookResponse } from '../../types/page-response-book-response';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-book-home',
@@ -16,5 +17,11 @@ export class BookHomeComponent implements OnInit {
     this.response$.load(this.bookService.findAllBooks());
   }
 
-  selectPage($event: number) {}
+  selectPage($event: number) {
+    this.response$.load(
+      this.bookService.findAllBooks({
+        page: $event,
+      })
+    );
+  }
 }

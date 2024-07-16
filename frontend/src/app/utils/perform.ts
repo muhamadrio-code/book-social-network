@@ -1,4 +1,4 @@
-import { delay, Observable, take } from 'rxjs';
+import { delay, Observable, OperatorFunction, take } from 'rxjs';
 
 export type ObserverOrNext<T> = {
   next?: ((value: T) => void) | null;
@@ -14,12 +14,13 @@ export class Perform<T> {
 
   load(
     action$: Observable<T>,
-    observerOrNext?: ObserverOrNext<T> | undefined
+    observerOrNext?: ObserverOrNext<T> | undefined,
+    ...operators: OperatorFunction<any, any>[]
   ): void {
     this.isLoading = true;
     this.hasError = false;
     this.action$ = action$;
-    this.action$.pipe(take(1)).subscribe({
+    this.action$.pipe(...(operators as []), take(1)).subscribe({
       next: (data: T) => {
         this.data = data;
         this.isLoading = false;
