@@ -1,0 +1,16 @@
+<div class="wrapper">
+  <i
+    class="menu-icon seach-icon rounded-2"
+    (click)="expand()"
+    [ngClass]="isExpand ? 'fas fa-xmark' : 'fas fa-magnifying-glass'"
+  ></i>
+  <div class="search-bar" [class.expand]="isExpand">
+    <div class="search-bar-title">
+      <span>Search</span>
+    </div>
+    <div class="search-bar-input d-flex gap-2 align-items-center">
+      <input class="form-control" type="text" placeholder="search" />
+      <i class="menu-icon seach-icon fas fa-magnifying-glass rounded-2"></i>
+    </div>
+  </div>
+</div>

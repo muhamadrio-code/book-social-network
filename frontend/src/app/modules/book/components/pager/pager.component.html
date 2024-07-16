@@ -1,0 +1,15 @@
+<div class="wrapper d-flex align-items-center justify-content-center p-4">
+  <div class="pager d-flex gap-2 justify-content-center align-items-center">
+    <ul class="list-unstyled d-flex gap-2 m-0 p-0 pagination">
+      <li (click)="prevPage()" class="previous">&laquo;</li>
+      <li
+        *ngFor="let page of pages"
+        [class.active]="currentPage === page"
+        (click)="setSelected(page)"
+      >
+        {{ page }}
+      </li>
+      <li (click)="nextPage()" class="next">&raquo;</li>
+    </ul>
+  </div>
+</div>

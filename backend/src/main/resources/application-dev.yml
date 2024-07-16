@@ -35,7 +35,7 @@ spring:
 application:
   security:
     jwt:
-      secret-key: 46lhi2V4F6j3Qji2MYXhR1GGeQoPwgcEjHLV4IMucy84ud07Q7TywbX5
+      secret-key: eyJhbGciOiJIUzM4NCJ9eyJmdWxsTmFtZSI6InJpbyBwZXJtYW5hIiwic3ViIjoibWlvQG1haWwuY29tIiwiaWF0IjoxNzIxMDA2Mzk2LCJleHAiOjE3MjEwOTI3OTYsImF1dGhvcml0aWVzIjpbIlVTRVIiXX0ZZR6jlLMPZ7fZkcOf2B7FZIW4M
       expiration: 8640000
   mailing:
     from: noreply@reeo.com

@@ -1,0 +1,39 @@
+.pagination {
+  display: inline-block;
+}
+
+.pagination li {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.pagination li.active {
+  background-color: var(--primary-100);
+  color: var(--text-100);
+  border-radius: 5px;
+}
+
+.pagination li:hover:not(.active) {
+  background-color: var(--primary-100);
+  color: var(--text-100);
+  border-radius: 5px;
+}
+
+.page-input:not(.open-input) {
+  display: none;
+}
+
+.page-input.open-input {
+  display: inline-block;
+  outline: none;
+  z-index: 99;
+  width: 2.5rem;
+  height: 2.5rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+}

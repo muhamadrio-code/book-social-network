@@ -1,0 +1,16 @@
+<div
+  class="wrapper d-flex flex-column gap-4"
+  *ngIf="response$.data as response"
+>
+  <app-menu />
+  <main>
+    <div class="d-flex flex-column gap-2">
+      <app-book-card *ngFor="let book of response.content" [book]="book" />
+    </div>
+  </main>
+  <app-pager
+    [totalPage]="response.totalPages ?? 1"
+    [currentPage]="response.number ?? 1"
+    (selectedPage)="selectPage($event)"
+  />
+</div>
