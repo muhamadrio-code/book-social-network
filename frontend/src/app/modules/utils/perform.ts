@@ -1,28 +1,38 @@
-import { catchError, Observable, take } from 'rxjs';
+import { delay, Observable, take } from 'rxjs';
+
+export type ObserverOrNext<T> = {
+  next?: ((value: T) => void) | null;
+  error?: ((error: any) => void) | null;
+  complete?: (() => void) | null;
+};
 
 export class Perform<T> {
   data: T | undefined;
   isLoading = false;
   hasError = false;
-  action$: Observable<T> | undefined;
+  private action$: Observable<T> | undefined;
 
-  load(action$: Observable<T>): void {
+  load(
+    action$: Observable<T>,
+    observerOrNext?: ObserverOrNext<T> | undefined
+  ): void {
     this.isLoading = true;
     this.hasError = false;
     this.action$ = action$;
-    this.action$
-      .pipe(
-        catchError(() => {
-          this.data = undefined;
-          this.isLoading = false;
-          this.hasError = true;
-          return [];
-        })
-      )
-      .subscribe((data: T) => {
+    this.action$.pipe(take(1)).subscribe({
+      next: (data: T) => {
         this.data = data;
         this.isLoading = false;
         this.hasError = false;
-      });
+        observerOrNext?.next?.(data);
+      },
+      error: (err) => {
+        this.data = undefined;
+        this.isLoading = false;
+        this.hasError = true;
+        observerOrNext?.error?.(err);
+      },
+      complete: () => observerOrNext?.complete?.(),
+    });
   }
 }

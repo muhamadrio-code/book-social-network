@@ -17,7 +17,14 @@
           name="password"
           [(ngModel)]="authRequest.password"
         ></app-input>
-        <button (click)="login()" class="login-btn" type="submit">login</button>
+        <button
+          *ngIf="!response.isLoading; else loading"
+          (click)="login()"
+          class="login-btn"
+          type="submit"
+        >
+          login
+        </button>
       </form>
       <div class="opt-group">
         <div class="remember-me">
@@ -37,3 +44,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #loading>
+  <button class="login-btn" [disabled]="true">loading...</button>
+</ng-template>
