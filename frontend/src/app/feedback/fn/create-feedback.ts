@@ -3,26 +3,24 @@
 import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { StrictHttpResponse } from '../../../shared/strict-http-response';
-import { RequestBuilder } from '../../../shared/request-builder';
+import { StrictHttpResponse } from '../../shared/strict-http-response';
+import { RequestBuilder } from '../../shared/request-builder';
 
-export interface FindFeeddbackByBook$Params {
-  page?: number;
-  size?: number;
-  'book-id': number;
+import { FeedbackRequest } from '../../book/types/feedback-request';
+
+export interface CreateFeedback$Params {
+  body: FeedbackRequest;
 }
 
-export function findFeeddbackByBook(
+export function createFeedback(
   http: HttpClient,
   rootUrl: string,
-  params: FindFeeddbackByBook$Params,
+  params: CreateFeedback$Params,
   context?: HttpContext
 ): Observable<StrictHttpResponse<{}>> {
-  const rb = new RequestBuilder(rootUrl, findFeeddbackByBook.PATH, 'get');
+  const rb = new RequestBuilder(rootUrl, createFeedback.PATH, 'post');
   if (params) {
-    rb.query('page', params.page, {});
-    rb.query('size', params.size, {});
-    rb.path('book-id', params['book-id'], {});
+    rb.body(params.body, 'application/json');
   }
 
   return http
@@ -37,4 +35,4 @@ export function findFeeddbackByBook(
     );
 }
 
-findFeeddbackByBook.PATH = '/feedbacks/book/{book-id}';
+createFeedback.PATH = '/feedbacks';

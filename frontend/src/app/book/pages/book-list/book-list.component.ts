@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Perform } from 'src/app/modules/utils/perform';
+import { Perform } from 'src/app/utils/perform';
 import { BookService } from '../../book.service';
 import { PageResponseBookResponse } from '../../types/page-response-book-response';
 

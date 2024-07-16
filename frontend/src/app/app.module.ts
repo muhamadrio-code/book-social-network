@@ -11,11 +11,11 @@ import {
   provideHttpClient,
   withInterceptors,
 } from '@angular/common/http';
-import { InputComponent } from './components/input/input.component';
+import { InputComponent } from './shared/components/input/input.component';
 import { FormsModule } from '@angular/forms';
 import { ActivateComponent } from './auth/pages/activate/activate.component';
 import { BookModule } from './book/book.module';
-import { ApiModule } from './shared/api.module';
+import { ApiModule } from './api.module';
 
 export const loggerInterceptor: HttpInterceptorFn = (req, next) => {
   const token = localStorage.getItem('token');

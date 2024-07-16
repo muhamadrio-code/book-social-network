@@ -4,15 +4,14 @@ import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { BaseService } from '../../shared/base-service';
-import { ApiConfiguration } from '../../shared/api-configuration';
-import { StrictHttpResponse } from '../../shared/strict-http-response';
-
-import { createFeedback } from '../fn/feedback/create-feedback';
-import { CreateFeedback$Params } from '../fn/feedback/create-feedback';
-import { findFeeddbackByBook } from '../fn/feedback/find-feeddback-by-book';
-import { FindFeeddbackByBook$Params } from '../fn/feedback/find-feeddback-by-book';
+import { ApiConfiguration } from '../shared/api-configuration';
+import { BaseService } from '../shared/base-service';
+import { CreateFeedback$Params, createFeedback } from './fn/create-feedback';
+import { StrictHttpResponse } from '../shared/strict-http-response';
+import {
+  FindFeeddbackByBook$Params,
+  findFeeddbackByBook,
+} from './fn/find-feeddback-by-book';
 
 @Injectable({ providedIn: 'root' })
 export class FeedbackService extends BaseService {

@@ -2,7 +2,7 @@ import { AuthenticationResponse } from '../../types/authentication-response';
 import { AuthService } from '../../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Perform } from 'src/app/modules/utils/perform';
+import { Perform } from 'src/app/utils/perform';
 import { TokenService } from '../../token.service';
 import { AuthenticationRequest } from '../../types/authentication-request';
 
