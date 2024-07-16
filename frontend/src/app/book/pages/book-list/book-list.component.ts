@@ -4,7 +4,7 @@ import {
   BookResponse,
   PageResponseBookResponse,
 } from 'src/app/services/models';
-import { BookService } from 'src/app/services/services';
+import { BookService } from '../../book.service';
 
 @Component({
   selector: 'app-book-list',

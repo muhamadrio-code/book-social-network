@@ -1,6 +1,6 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/services';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-activate',

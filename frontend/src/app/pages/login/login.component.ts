@@ -1,10 +1,9 @@
 import { AuthenticationResponse } from './../../services/models/authentication-response';
 import { AuthenticationRequest } from 'src/app/services/models';
-import { AuthService } from './../../services/services/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenService } from 'src/app/services/services/token.service';
-import { BehaviorSubject, concat, delay, of } from 'rxjs';
 import { Perform } from 'src/app/modules/utils/perform';
 
 @Component({

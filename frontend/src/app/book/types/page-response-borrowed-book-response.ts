@@ -1,6 +1,8 @@
 /* tslint:disable */
+
+import { BorrowedBookResponse } from './borrowed-book-response';
+
 /* eslint-disable */
-import { BorrowedBookResponse } from '../models/borrowed-book-response';
 export interface PageResponseBorrowedBookResponse {
   content?: Array<BorrowedBookResponse>;
   first?: boolean;

@@ -5,9 +5,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
+import { BaseService } from '../../shared/base-service';
+import { ApiConfiguration } from '../../shared/api-configuration';
+import { StrictHttpResponse } from '../../shared/strict-http-response';
 
 import { createFeedback } from '../fn/feedback/create-feedback';
 import { CreateFeedback$Params } from '../fn/feedback/create-feedback';
@@ -29,8 +29,10 @@ export class FeedbackService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  createFeedback$Response(params: CreateFeedback$Params, context?: HttpContext): Observable<StrictHttpResponse<{
-}>> {
+  createFeedback$Response(
+    params: CreateFeedback$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<{}>> {
     return createFeedback(this.http, this.rootUrl, params, context);
   }
 
@@ -40,12 +42,12 @@ export class FeedbackService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  createFeedback(params: CreateFeedback$Params, context?: HttpContext): Observable<{
-}> {
+  createFeedback(
+    params: CreateFeedback$Params,
+    context?: HttpContext
+  ): Observable<{}> {
     return this.createFeedback$Response(params, context).pipe(
-      map((r: StrictHttpResponse<{
-}>): {
-} => r.body)
+      map((r: StrictHttpResponse<{}>): {} => r.body)
     );
   }
 
@@ -58,8 +60,10 @@ export class FeedbackService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findFeeddbackByBook$Response(params: FindFeeddbackByBook$Params, context?: HttpContext): Observable<StrictHttpResponse<{
-}>> {
+  findFeeddbackByBook$Response(
+    params: FindFeeddbackByBook$Params,
+    context?: HttpContext
+  ): Observable<StrictHttpResponse<{}>> {
     return findFeeddbackByBook(this.http, this.rootUrl, params, context);
   }
 
@@ -69,13 +73,12 @@ export class FeedbackService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findFeeddbackByBook(params: FindFeeddbackByBook$Params, context?: HttpContext): Observable<{
-}> {
+  findFeeddbackByBook(
+    params: FindFeeddbackByBook$Params,
+    context?: HttpContext
+  ): Observable<{}> {
     return this.findFeeddbackByBook$Response(params, context).pipe(
-      map((r: StrictHttpResponse<{
-}>): {
-} => r.body)
+      map((r: StrictHttpResponse<{}>): {} => r.body)
     );
   }
-
 }

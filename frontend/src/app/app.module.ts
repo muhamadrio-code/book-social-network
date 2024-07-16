@@ -14,8 +14,8 @@ import {
 import { InputComponent } from './components/input/input.component';
 import { FormsModule } from '@angular/forms';
 import { ActivateComponent } from './pages/activate/activate.component';
-import { BookModule } from './modules/book/book.module';
-import { ApiModule } from './services/api.module';
+import { BookModule } from './book/book.module';
+import { ApiModule } from './shared/api.module';
 
 export const loggerInterceptor: HttpInterceptorFn = (req, next) => {
   const token = localStorage.getItem('token');

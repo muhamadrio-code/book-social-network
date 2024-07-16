@@ -5,17 +5,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
+import { BaseService } from '../shared/base-service';
+import { ApiConfiguration } from '../shared/api-configuration';
+import { StrictHttpResponse } from '../shared/strict-http-response';
 
-import { activate } from '../fn/auth/activate';
-import { Activate$Params } from '../fn/auth/activate';
-import { AuthenticationResponse } from '../models/authentication-response';
-import { register } from '../fn/auth/register';
-import { Register$Params } from '../fn/auth/register';
-import { signin } from '../fn/auth/signin';
-import { Signin$Params } from '../fn/auth/signin';
+import { activate } from '../services/fn/auth/activate';
+import { Activate$Params } from '../services/fn/auth/activate';
+import { AuthenticationResponse } from '../services/models/authentication-response';
+import { register } from '../services/fn/auth/register';
+import { Register$Params } from '../services/fn/auth/register';
+import { signin } from '../services/fn/auth/signin';
+import { Signin$Params } from '../services/fn/auth/signin';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService {

@@ -3,22 +3,26 @@
 import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { StrictHttpResponse } from '../../../shared/strict-http-response';
-import { RequestBuilder } from '../../../shared/request-builder';
+import { StrictHttpResponse } from '../../shared/strict-http-response';
+import { RequestBuilder } from '../../shared/request-builder';
 
-export interface Activate$Params {
-  token: string;
+export interface UploadBookCoverPicture$Params {
+  'book-id': number;
+  body?: {
+    file: Blob;
+  };
 }
 
-export function activate(
+export function uploadBookCoverPicture(
   http: HttpClient,
   rootUrl: string,
-  params: Activate$Params,
+  params: UploadBookCoverPicture$Params,
   context?: HttpContext
 ): Observable<StrictHttpResponse<{}>> {
-  const rb = new RequestBuilder(rootUrl, activate.PATH, 'get');
+  const rb = new RequestBuilder(rootUrl, uploadBookCoverPicture.PATH, 'post');
   if (params) {
-    rb.query('token', params.token, {});
+    rb.path('book-id', params['book-id'], {});
+    rb.body(params.body, 'multipart/form-data');
   }
 
   return http
@@ -33,4 +37,4 @@ export function activate(
     );
 }
 
-activate.PATH = '/auth/activate-account';
+uploadBookCoverPicture.PATH = '/books/cover/{book-id}';

@@ -3,26 +3,26 @@
 import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { StrictHttpResponse } from '../../../shared/strict-http-response';
-import { RequestBuilder } from '../../../shared/request-builder';
+import { StrictHttpResponse } from '../../shared/strict-http-response';
+import { RequestBuilder } from '../../shared/request-builder';
 
-export interface FindFeeddbackByBook$Params {
+import { PageResponseBorrowedBookResponse } from '../types/page-response-borrowed-book-response';
+
+export interface FindAllBorrowedBooks$Params {
   page?: number;
   size?: number;
-  'book-id': number;
 }
 
-export function findFeeddbackByBook(
+export function findAllBorrowedBooks(
   http: HttpClient,
   rootUrl: string,
-  params: FindFeeddbackByBook$Params,
+  params?: FindAllBorrowedBooks$Params,
   context?: HttpContext
-): Observable<StrictHttpResponse<{}>> {
-  const rb = new RequestBuilder(rootUrl, findFeeddbackByBook.PATH, 'get');
+): Observable<StrictHttpResponse<PageResponseBorrowedBookResponse>> {
+  const rb = new RequestBuilder(rootUrl, findAllBorrowedBooks.PATH, 'get');
   if (params) {
     rb.query('page', params.page, {});
     rb.query('size', params.size, {});
-    rb.path('book-id', params['book-id'], {});
   }
 
   return http
@@ -32,9 +32,9 @@ export function findFeeddbackByBook(
     .pipe(
       filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<{}>;
+        return r as StrictHttpResponse<PageResponseBorrowedBookResponse>;
       })
     );
 }
 
-findFeeddbackByBook.PATH = '/feedbacks/book/{book-id}';
+findAllBorrowedBooks.PATH = '/books/borrowed';
