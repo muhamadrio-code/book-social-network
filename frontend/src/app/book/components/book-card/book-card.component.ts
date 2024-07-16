@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BookResponse } from 'src/app/services/models';
+import { BookResponse } from '../../types/book-response';
 
 @Component({
   selector: 'app-book-card',

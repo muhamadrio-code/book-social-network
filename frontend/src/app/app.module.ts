@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './auth/pages/login/login.component';
+import { RegisterComponent } from './auth/pages/register/register.component';
 import {
   HttpHeaders,
   HttpInterceptorFn,
@@ -13,7 +13,7 @@ import {
 } from '@angular/common/http';
 import { InputComponent } from './components/input/input.component';
 import { FormsModule } from '@angular/forms';
-import { ActivateComponent } from './pages/activate/activate.component';
+import { ActivateComponent } from './auth/pages/activate/activate.component';
 import { BookModule } from './book/book.module';
 import { ApiModule } from './shared/api.module';
 

@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Perform } from 'src/app/modules/utils/perform';
-import {
-  BookResponse,
-  PageResponseBookResponse,
-} from 'src/app/services/models';
 import { BookService } from '../../book.service';
+import { PageResponseBookResponse } from '../../types/page-response-book-response';
 
 @Component({
   selector: 'app-book-list',

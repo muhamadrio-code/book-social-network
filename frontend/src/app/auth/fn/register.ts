@@ -3,22 +3,24 @@
 import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { StrictHttpResponse } from '../../../shared/strict-http-response';
-import { RequestBuilder } from '../../../shared/request-builder';
+import { StrictHttpResponse } from '../../shared/strict-http-response';
+import { RequestBuilder } from '../../shared/request-builder';
 
-export interface Activate$Params {
-  token: string;
+import { UserRegisterRequest } from '../types/user-register-request';
+
+export interface Register$Params {
+  body: UserRegisterRequest;
 }
 
-export function activate(
+export function register(
   http: HttpClient,
   rootUrl: string,
-  params: Activate$Params,
+  params: Register$Params,
   context?: HttpContext
 ): Observable<StrictHttpResponse<{}>> {
-  const rb = new RequestBuilder(rootUrl, activate.PATH, 'get');
+  const rb = new RequestBuilder(rootUrl, register.PATH, 'post');
   if (params) {
-    rb.query('token', params.token, {});
+    rb.body(params.body, 'application/json');
   }
 
   return http
@@ -33,4 +35,4 @@ export function activate(
     );
 }
 
-activate.PATH = '/auth/activate-account';
+register.PATH = '/auth/register';

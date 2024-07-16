@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
-import { UserRegisterRequest } from 'src/app/services/models';
+import { UserRegisterRequest } from '../../types/user-register-request';
 
 @Component({
   selector: 'app-register',

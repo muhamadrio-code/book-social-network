@@ -9,13 +9,13 @@ import { BaseService } from '../shared/base-service';
 import { ApiConfiguration } from '../shared/api-configuration';
 import { StrictHttpResponse } from '../shared/strict-http-response';
 
-import { activate } from '../services/fn/auth/activate';
-import { Activate$Params } from '../services/fn/auth/activate';
-import { AuthenticationResponse } from '../services/models/authentication-response';
-import { register } from '../services/fn/auth/register';
-import { Register$Params } from '../services/fn/auth/register';
-import { signin } from '../services/fn/auth/signin';
-import { Signin$Params } from '../services/fn/auth/signin';
+import { activate } from './fn/activate';
+import { Activate$Params } from './fn/activate';
+import { AuthenticationResponse } from './types/authentication-response';
+import { register } from './fn/register';
+import { Register$Params } from './fn/register';
+import { signin } from './fn/signin';
+import { Signin$Params } from './fn/signin';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService {
