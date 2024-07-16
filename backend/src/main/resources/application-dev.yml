@@ -40,7 +40,7 @@ application:
   mailing:
     from: noreply@reeo.com
     frontend:
-      confirmation-url: http://localhost:4200/activate?t=
+      confirmation-url: http://localhost:4200/auth/activate?t=
   file:
     uploads:
       photos-output-path: ./uploads
