@@ -4,11 +4,10 @@ import { BookService } from '../../book.service';
 import { PageResponseBookResponse } from '../../types/page-response-book-response';
 
 @Component({
-  selector: 'app-book-list',
-  templateUrl: './book-list.component.html',
-  styleUrls: ['./book-list.component.scss'],
+  selector: 'app-book-home',
+  templateUrl: './book-home.component.html',
 })
-export class BookListComponent implements OnInit {
+export class BookHomeComponent implements OnInit {
   constructor(private bookService: BookService) {}
 
   response$: Perform<PageResponseBookResponse> = new Perform();

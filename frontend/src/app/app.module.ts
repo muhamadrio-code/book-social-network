@@ -9,9 +9,7 @@ import {
   provideHttpClient,
   withInterceptors,
 } from '@angular/common/http';
-import { BookModule } from './book/book.module';
 import { ApiModule } from './api.module';
-import { FormsModule } from '@angular/forms';
 
 export const loggerInterceptor: HttpInterceptorFn = (req, next) => {
   const token = localStorage.getItem('token');
@@ -30,7 +28,7 @@ export const loggerInterceptor: HttpInterceptorFn = (req, next) => {
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, BookModule, ApiModule],
+  imports: [BrowserModule, AppRoutingModule, ApiModule],
   providers: [provideHttpClient(withInterceptors([loggerInterceptor]))],
   bootstrap: [AppComponent],
 })
