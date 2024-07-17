@@ -34,7 +34,7 @@ export class RegisterComponent implements OnDestroy {
       .subscribe({
         next: () => {
           this.isOnProcess = false;
-          this.router.navigate(['activate']);
+          this.router.navigate(['./activate']);
         },
         error: (err) => {
           this.isOnProcess = false;

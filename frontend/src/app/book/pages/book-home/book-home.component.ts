@@ -1,27 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { Perform } from 'src/app/utils/perform';
+import { Component } from '@angular/core';
 import { BookService } from '../../book.service';
 import { PageResponseBookResponse } from '../../types/page-response-book-response';
-import { map } from 'rxjs';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-book-home',
   templateUrl: './book-home.component.html',
 })
-export class BookHomeComponent implements OnInit {
-  constructor(private bookService: BookService) {}
+export class BookHomeComponent {
+  constructor(
+    private bookService: BookService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
-  response$: Perform<PageResponseBookResponse> = new Perform();
+  response$ = this.route.queryParamMap.pipe(
+    switchMap((p) => this.findAllBooks(p))
+  );
 
-  ngOnInit(): void {
-    this.response$.load(this.bookService.findAllBooks());
+  private findAllBooks(p: ParamMap): Observable<PageResponseBookResponse> {
+    const page = p.get('page') ?? '0';
+    return this.bookService.findAllBooks({
+      page: Number.parseInt(page),
+    });
   }
 
   selectPage($event: number) {
-    this.response$.load(
-      this.bookService.findAllBooks({
-        page: $event,
-      })
-    );
+    this.router.navigate(['./'], {
+      relativeTo: this.route,
+      queryParams: { page: $event },
+    });
   }
 }

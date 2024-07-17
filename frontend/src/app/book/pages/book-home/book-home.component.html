@@ -1,6 +1,6 @@
 <main
   class="wrapper d-flex flex-column gap-4"
-  *ngIf="response$.data as response"
+  *ngIf="response$ | async; let response"
 >
   <div class="d-flex flex-column gap-2">
     <app-book-card *ngFor="let book of response?.content" [book]="book" />
