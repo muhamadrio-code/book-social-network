@@ -6,14 +6,17 @@ import { MyBookComponent } from './pages/my-book/my-book.component';
 import { WaitingListComponent } from './pages/waiting-list/waiting-list.component';
 import { ReturnedBookComponent } from './pages/returned-book/returned-book.component';
 import { BookComponent } from './pages/book/book.component';
+import { authGuard } from '../auth/auth.guard';
 
 const routes: Route[] = [
   {
     path: '',
     component: BookComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',
+        canActivateChild: [authGuard],
         children: [
           {
             path: '',

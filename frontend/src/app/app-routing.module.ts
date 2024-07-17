@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from './auth/auth.guard';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -9,6 +11,11 @@ const routes: Routes = [
   {
     path: 'books',
     loadChildren: () => import('./book/book.module').then((m) => m.BookModule),
+    canActivate: [authGuard],
+  },
+  {
+    path: '**', // widlcard,
+    component: NotFoundComponent,
   },
 ];
 
