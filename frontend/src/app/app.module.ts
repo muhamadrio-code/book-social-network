@@ -9,7 +9,7 @@ import {
   provideHttpClient,
   withInterceptors,
 } from '@angular/common/http';
-import { ApiModule } from './api.module';
+import { ApiModule } from './shared/api.module';
 
 export const loggerInterceptor: HttpInterceptorFn = (req, next) => {
   const token = localStorage.getItem('token');

@@ -7,14 +7,11 @@ import {
   Optional,
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  ApiConfiguration,
-  ApiConfigurationParams,
-} from './shared/api-configuration';
+import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
-import { BookService } from './book/book.service';
-import { AuthService } from './auth/auth.service';
-import { FeedbackService } from './feedback/feedback.service';
+import { BookService } from '../book/book.service';
+import { AuthService } from '../auth/auth.service';
+import { FeedbackService } from '../feedback/feedback.service';
 
 /**
  * Module that provides all services and configuration.
