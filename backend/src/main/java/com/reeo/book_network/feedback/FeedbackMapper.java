@@ -1,5 +1,6 @@
 package com.reeo.book_network.feedback;
 
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -16,11 +17,12 @@ public class FeedbackMapper {
         .build();
   }
 
-  public FeedbackResponse toFeedbackResponse(Feedback feedback, Integer ownerId) {
+  @SneakyThrows
+  public FeedbackResponse toFeedbackResponse(Feedback feedback, String userId) {
     return FeedbackResponse.builder()
         .comment(feedback.getComment())
         .note(feedback.getNote())
-        .ownFeedback(Objects.equals(feedback.getBook().getOwner().getId(), ownerId))
+        .ownFeedback(Objects.equals(feedback.getBook().getCreatedBy(), userId))
         .build();
   }
 

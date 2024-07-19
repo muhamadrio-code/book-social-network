@@ -9,18 +9,18 @@ public interface BookTransactionsHistoryRepository extends JpaRepository<BookTra
   @Query("""
       SELECT history
       FROM BookTransactionsHistory history
-      WHERE history.user.id = :userId
+      WHERE history.createdBy = :userId
       """)
-  Page<BookTransactionsHistory> findAllHistoriesByUserId(Integer userId,
+  Page<BookTransactionsHistory> findAllHistoriesByUserId(String userId,
                                                          Pageable pageable);
 
   @Query("""
       SELECT history
       FROM BookTransactionsHistory history
-      WHERE history.book.owner.id = :userId
+      WHERE history.book.createdBy = :userId
       AND history.returned = true
       """)
-  Page<BookTransactionsHistory> findAllReturnedBookHistoriesByUserId(Integer userId,
+  Page<BookTransactionsHistory> findAllReturnedBookHistoriesByUserId(String userId,
                                                                      Pageable pageable);
 
 }

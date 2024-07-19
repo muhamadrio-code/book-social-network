@@ -1,7 +1,6 @@
 package com.reeo.book_network.book;
 
 import com.reeo.book_network.common.PageResponse;
-import com.reeo.book_network.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -30,7 +29,7 @@ public class BookController {
       @RequestBody @Valid SaveBookRequest request,
       Authentication authentication
   ) {
-    Integer savedBookId = service.save(request, (User) authentication.getPrincipal());
+    Integer savedBookId = service.save(request, authentication);
     return ResponseEntity.ok(savedBookId);
   }
 
@@ -54,7 +53,7 @@ public class BookController {
       Authentication authentication
   ) {
     return ResponseEntity
-        .ok(service.findAllBooks(page, size, (User) authentication.getPrincipal()));
+        .ok(service.findAllBooks(page, size, authentication));
   }
 
   @Operation(
@@ -67,7 +66,7 @@ public class BookController {
       Authentication authentication
   ) {
     return ResponseEntity
-        .ok(service.findAllBooksByOwner(page, size, (User) authentication.getPrincipal()));
+        .ok(service.findAllBooksByOwner(page, size, authentication));
   }
 
   @Operation(
@@ -80,7 +79,7 @@ public class BookController {
       Authentication authentication
   ) {
     return ResponseEntity
-        .ok(service.findAllBorrowedBook(page, size, (User) authentication.getPrincipal()));
+        .ok(service.findAllBorrowedBook(page, size, authentication));
   }
 
   @Operation(
@@ -93,7 +92,7 @@ public class BookController {
       Authentication authentication
   ) {
     return ResponseEntity
-        .ok(service.findAllReturnedBooks(page, size, (User) authentication.getPrincipal()));
+        .ok(service.findAllReturnedBooks(page, size, authentication));
   }
 
   @Operation(
@@ -104,7 +103,7 @@ public class BookController {
       @PathVariable("book-id") Integer bookId,
       Authentication authentication
   ) {
-    return ResponseEntity.ok(service.updateShareableStatus(bookId, (User) authentication.getPrincipal()));
+    return ResponseEntity.ok(service.updateShareableStatus(bookId, authentication));
   }
 
   @Operation(
@@ -115,7 +114,7 @@ public class BookController {
       @PathVariable("book-id") Integer bookId,
       Authentication authentication
   ) {
-    return ResponseEntity.ok(service.updateArchivedStatus(bookId, (User) authentication.getPrincipal()));
+    return ResponseEntity.ok(service.updateArchivedStatus(bookId, authentication));
   }
 
   @Operation(
@@ -126,7 +125,7 @@ public class BookController {
       @PathVariable("book-id") Integer bookId,
       Authentication authentication
   ) {
-    return ResponseEntity.ok(service.borrowBook(bookId, (User) authentication.getPrincipal()));
+    return ResponseEntity.ok(service.borrowBook(bookId, authentication));
   }
 
   @Operation(
@@ -137,7 +136,7 @@ public class BookController {
       @PathVariable("book-id") Integer bookId,
       Authentication authentication
   ) {
-    return ResponseEntity.ok(service.returnBorrowedBook(bookId, (User) authentication.getPrincipal()));
+    return ResponseEntity.ok(service.returnBorrowedBook(bookId, authentication));
   }
 
   @Operation(
@@ -148,7 +147,7 @@ public class BookController {
       @PathVariable("book-id") Integer bookId,
       Authentication authentication
   ) {
-    return ResponseEntity.ok(service.approveReturnedBook(bookId, (User) authentication.getPrincipal()));
+    return ResponseEntity.ok(service.approveReturnedBook(bookId, authentication));
   }
 
   @Operation(
@@ -161,7 +160,7 @@ public class BookController {
       @RequestPart("file") MultipartFile file,
       Authentication authentication
   ) {
-    service.uploadBookCoverPicture(bookId, (User) authentication.getPrincipal(), file);
+    service.uploadBookCoverPicture(bookId, authentication, file);
     return ResponseEntity.accepted().build();
   }
 }

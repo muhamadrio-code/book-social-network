@@ -1,6 +1,5 @@
 package com.reeo.book_network.feedback;
 
-import com.reeo.book_network.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,9 +26,9 @@ public class FeedbackController {
   ResponseEntity<?> createFeedback(
       @Valid @RequestBody FeedbackRequest request,
       Authentication authentication
-  ) {
+  ) throws Exception {
     return ResponseEntity
-        .ok(service.save(request, (User) authentication.getPrincipal()));
+        .ok(service.save(request, authentication));
   }
 
   @Operation(
@@ -44,7 +43,7 @@ public class FeedbackController {
   ) {
     return ResponseEntity
         .ok(service.findAllFeedbackByBookId(
-            bookId, size, page, (User) authentication.getPrincipal()));
+            bookId, size, page, authentication));
   }
 
 }

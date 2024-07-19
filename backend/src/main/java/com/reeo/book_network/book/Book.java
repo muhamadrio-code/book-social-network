@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.reeo.book_network.common.AuditableEntity;
 import com.reeo.book_network.feedback.Feedback;
 import com.reeo.book_network.history.BookTransactionsHistory;
-import com.reeo.book_network.user.User;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,10 +39,6 @@ public class Book extends AuditableEntity {
   private boolean archived;
   @Column(name = "shareable", nullable = false)
   private boolean shareable;
-
-  @ManyToOne
-  @JoinColumn(name = "owner_id", nullable = false, updatable = false)
-  private User owner;
 
   @OneToMany(mappedBy = "book")
   private List<Feedback> feedbacks;

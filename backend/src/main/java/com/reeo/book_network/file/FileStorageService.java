@@ -27,14 +27,13 @@ public class FileStorageService {
 
   public String saveFile(
       @NonNull MultipartFile sourceFile,
-      @NonNull Integer userId,
-      @NonNull Integer bookId
+      @NonNull String userId
   ) {
     String fileSubPathString = "users" + separator + userId;
-    return saveFile(sourceFile, fileSubPathString);
+    return saveFileInternal(sourceFile, fileSubPathString);
   }
 
-  private String saveFile(
+  private String saveFileInternal(
       @NonNull MultipartFile sourceFile,
       @NonNull String fileSubPathString
   ) {

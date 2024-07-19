@@ -5,6 +5,7 @@ import {
   ModuleWithProviders,
   SkipSelf,
   Optional,
+  APP_INITIALIZER,
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
@@ -12,6 +13,11 @@ import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 import { BookService } from '../book/book.service';
 import { AuthService } from '../auth/auth.service';
 import { FeedbackService } from '../feedback/feedback.service';
+import { KeycloakService } from '../keycloak/keycloak.service';
+
+export function kcFactory(service: KeycloakService): () => Promise<any> {
+  return () => service.init();
+}
 
 /**
  * Module that provides all services and configuration.
@@ -20,7 +26,18 @@ import { FeedbackService } from '../feedback/feedback.service';
   imports: [],
   exports: [],
   declarations: [],
-  providers: [FeedbackService, BookService, AuthService, ApiConfiguration],
+  providers: [
+    FeedbackService,
+    BookService,
+    AuthService,
+    ApiConfiguration,
+    {
+      useFactory: kcFactory,
+      provide: APP_INITIALIZER,
+      deps: [KeycloakService],
+      multi: true,
+    },
+  ],
 })
 export class ApiModule {
   static forRoot(

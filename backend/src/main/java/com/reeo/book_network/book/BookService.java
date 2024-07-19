@@ -7,11 +7,11 @@ import com.reeo.book_network.exception.OperationNotPermittedException;
 import com.reeo.book_network.file.FileStorageService;
 import com.reeo.book_network.history.BookTransactionsHistory;
 import com.reeo.book_network.history.BookTransactionsHistoryRepository;
-import com.reeo.book_network.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,10 +29,9 @@ public class BookService {
   private final BookTransactionsHistoryRepository bookTransactionsHistoryRepository;
   private final FileStorageService fileStorageService;
 
-  public Integer save(SaveBookRequest request, User owner) {
+  public Integer save(SaveBookRequest request, Authentication authentication) {
     final Book book = bookMapper.toBook(request);
-    book.setOwner(owner);
-
+    book.setCreatedBy(authentication.getName());
     return bookMapper.toResponse(
         bookRepository.save(book)
     ).getId();
@@ -43,30 +42,30 @@ public class BookService {
   }
 
   public PageResponse<BookResponse> findAllBooks(
-      int page, int size, User user
+      int page, int size, Authentication authentication
   ) {
     final PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdDate").descending());
     final Page<BookResponse> bookResponses = bookRepository
-        .findAllDisplayableBooks(pageRequest, user.getId())
+        .findAllDisplayableBooks(pageRequest, authentication.getName())
         .map(bookMapper::toResponse);
 
     return buildPagedApiResponses(bookResponses);
   }
 
   public PageResponse<BookResponse> findAllBooksByOwner(
-      int page, int size, User owner
+      int page, int size, Authentication authentication
   ) {
     final PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdDate").descending());
     Page<BookResponse> bookResponses = bookRepository
-        .findAll(withOwnerId(owner.getId()), pageRequest)
+        .findAll(withOwnerId(authentication.getName()), pageRequest)
         .map(bookMapper::toResponse);
 
     return buildPagedApiResponses(bookResponses);
   }
 
-  public Integer updateShareableStatus(Integer bookId, User authenticatedUser) {
+  public Integer updateShareableStatus(Integer bookId, Authentication authentication) {
     Book book = findBookById(bookId);
-    if (!book.getOwner().getId().equals(authenticatedUser.getId())) {
+    if (!book.getCreatedBy().equals(authentication.getName())) {
       throw new OperationNotPermittedException(
           "You cannot update others book shareable status"
       );
@@ -76,9 +75,9 @@ public class BookService {
     return book.getId();
   }
 
-  public Integer updateArchivedStatus(Integer bookId, User authenticatedUser) {
+  public Integer updateArchivedStatus(Integer bookId, Authentication authentication) {
     Book book = findBookById(bookId);
-    if (!book.getOwner().getId().equals(authenticatedUser.getId())) {
+    if (!book.getCreatedBy().equals(authentication.getName())) {
       throw new OperationNotPermittedException(
           "You cannot update others book archived status"
       );
@@ -89,15 +88,16 @@ public class BookService {
   }
 
   @Transactional
-  public Integer borrowBook(Integer bookId, User authenticatedUser) {
+  public Integer borrowBook(Integer bookId, Authentication authentication) {
     Book book = findBookById(bookId);
+    String userId = authentication.getName();
     if (!book.isShareable() || book.isArchived()) {
       throw new OperationNotPermittedException(
           "The request book cannot be borrowed since it is archived or not shareable"
       );
     }
 
-    boolean bookIsMine = book.getOwner().getId().equals(authenticatedUser.getId());
+    boolean bookIsMine = book.getCreatedBy().equals(userId);
     if (bookIsMine) {
       throw new OperationNotPermittedException(
           "You cannot borrow your own book"
@@ -109,7 +109,7 @@ public class BookService {
     if (!transactionHistoryIsEmpty) {
       BookTransactionsHistory lastTransaction = getBookLastTransactionHistory(book);
       boolean isReturnedOrApproved = lastTransaction.isReturned() || lastTransaction.isReturnApproved();
-      boolean isBorrowedByMe = lastTransaction.getUser().getId().equals(authenticatedUser.getId());
+      boolean isBorrowedByMe = lastTransaction.getCreatedBy().equals(userId);
       if (!isReturnedOrApproved) {
         if (isBorrowedByMe) {
           throw new OperationNotPermittedException(
@@ -121,15 +121,16 @@ public class BookService {
       }
     }
 
-    return createNewTransaction(book, authenticatedUser);
+    return createNewTransaction(book, userId);
   }
 
-  public Integer returnBorrowedBook(Integer bookId, User user) {
+  public Integer returnBorrowedBook(Integer bookId, Authentication authentication) {
     Book book = findBookById(bookId);
+    String userId = authentication.getName();
     if (book.isArchived() || !book.isShareable()) {
       throw new OperationNotPermittedException("The requested book is archived or not shareable");
     }
-    if (book.getOwner().getId().equals(user.getId())) {
+    if (book.getCreatedBy().equals(userId)) {
       throw new OperationNotPermittedException(
           "Cannot borrow or return your own book"
       );
@@ -140,7 +141,7 @@ public class BookService {
           "You already returned the Book or Book returned is not approved yet"
       );
     }
-    if (!lastTransaction.getUser().getId().equals(user.getId())) {
+    if (!lastTransaction.getCreatedBy().equals(userId)) {
       throw new OperationNotPermittedException(
           "You cannot returned a book that borrowed by other user"
       );
@@ -150,12 +151,13 @@ public class BookService {
     return lastTransaction.getId();
   }
 
-  public Integer approveReturnedBook(Integer bookId, User user) {
+  public Integer approveReturnedBook(Integer bookId, Authentication authentication) {
     Book book = findBookById(bookId);
+    String userId = authentication.getName();
     if (book.isArchived() || !book.isShareable()) {
       throw new OperationNotPermittedException("The requested book is archived or not shareable");
     }
-    if (!book.getOwner().getId().equals(user.getId())) {
+    if (!book.getCreatedBy().equals(userId)) {
       throw new OperationNotPermittedException("You did not own this book");
     }
 
@@ -175,25 +177,29 @@ public class BookService {
     return lastTransaction.getId();
   }
 
-  public void uploadBookCoverPicture(Integer bookId, User user, MultipartFile picture) {
+  public void uploadBookCoverPicture(Integer bookId, Authentication authentication, MultipartFile picture) {
+
     Book book = findBookById(bookId);
-    String pathString = fileStorageService.saveFile(picture, user.getId(), bookId);
+    String userId = authentication.getName();
+    String pathString = fileStorageService.saveFile(picture, userId);
     book.setBookCover(pathString);
     bookRepository.save(book);
   }
 
-  public PageResponse<BorrowedBookResponse> findAllBorrowedBook(int page, int size, User user) {
+  public PageResponse<BorrowedBookResponse> findAllBorrowedBook(int page, int size, Authentication authentication) {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdDate"));
+    String userId = authentication.getName();
     Page<BorrowedBookResponse> responses = bookTransactionsHistoryRepository
-        .findAllHistoriesByUserId(user.getId(), pageRequest)
+        .findAllHistoriesByUserId(userId, pageRequest)
         .map(this::getBorrowedBookResponseMapper);
     return buildPagedApiResponses(responses);
   }
 
-  public PageResponse<BorrowedBookResponse> findAllReturnedBooks(int page, int size, User user) {
+  public PageResponse<BorrowedBookResponse> findAllReturnedBooks(int page, int size, Authentication authentication) {
     PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdDate"));
+    String userId = authentication.getName();
     Page<BorrowedBookResponse> responses = bookTransactionsHistoryRepository
-        .findAllReturnedBookHistoriesByUserId(user.getId(), pageRequest)
+        .findAllReturnedBookHistoriesByUserId(userId, pageRequest)
         .map(this::getBorrowedBookResponseMapper);
     return buildPagedApiResponses(responses);
   }
@@ -211,12 +217,10 @@ public class BookService {
         .build();
   }
 
-  private Integer createNewTransaction(Book book, User user) {
+  private Integer createNewTransaction(Book book, String userId) {
     BookTransactionsHistory transactionsHistory = BookTransactionsHistory.builder()
         .book(book)
-        .user(user)
-        .createdBy(user.getId())
-        .lastModifiedBy(user.getId())
+        .createdBy(userId)
         .returned(false)
         .returnApproved(false)
         .build();

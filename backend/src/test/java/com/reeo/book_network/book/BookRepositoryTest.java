@@ -1,7 +1,5 @@
 package com.reeo.book_network.book;
 
-import com.reeo.book_network.user.User;
-import com.reeo.book_network.user.UserRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,37 +20,30 @@ class BookRepositoryTest {
 
   @Autowired
   private BookRepository bookRepository;
-  @Autowired
-  private UserRepository userRepository;
 
 
   @Autowired
   private EntityManager entityManager;
 
   private Book book;
-  private User user;
-
 
   @BeforeEach
   void setUp() {
-    User save = userRepository.save(
-        User.builder()
-            .firstName("")
-            .lastName("")
-            .password("12345678")
-            .email("user@mail.com")
-            .accountLocked(false)
-            .enabled(false)
-            .build()
-    );
-    user = entityManager.find(User.class, save.getId());
+//    User save = userRepository.save(
+//        User.builder()
+//            .firstName("")
+//            .lastName("")
+//            .password("12345678")
+//            .email("user@mail.com")
+//            .accountLocked(false)
+//            .enabled(false)
+//            .build()
+//    );
 
     book = Book.builder()
         .id(1)
         .archived(false)
         .shareable(true)
-        .owner(user)
-        .createdBy(user.getId())
         .build();
   }
 
@@ -62,7 +53,7 @@ class BookRepositoryTest {
     Book savedBook = bookRepository.save(book);
 
     Page<Book> allDisplayableBooks = bookRepository
-        .findAllDisplayableBooks(Pageable.unpaged(), 0);
+        .findAllDisplayableBooks(Pageable.unpaged(), "");
     List<Book> list = allDisplayableBooks.stream().toList();
 
     assertThat(list).contains(savedBook);
@@ -74,7 +65,7 @@ class BookRepositoryTest {
     Book savedBook = bookRepository.save(book);
 
     Page<Book> allDisplayableBooks = bookRepository
-        .findAllDisplayableBooks(Pageable.unpaged(), user.getId());
+        .findAllDisplayableBooks(Pageable.unpaged(), "");
     List<Book> list = allDisplayableBooks.stream().toList();
 
     assertThat(list).doesNotContain(savedBook);

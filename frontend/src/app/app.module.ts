@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, inject } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,9 +10,12 @@ import {
   withInterceptors,
 } from '@angular/common/http';
 import { ApiModule } from './shared/api.module';
+import { KeycloakService } from './keycloak/keycloak.service';
 
-export const loggerInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = localStorage.getItem('token');
+export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
+  const service = inject(KeycloakService);
+  const token = service.keycloak.token;
+
   if (token) {
     const newReq = req.clone({
       headers: new HttpHeaders({
@@ -23,13 +26,13 @@ export const loggerInterceptor: HttpInterceptorFn = (req, next) => {
     return next(newReq);
   }
 
-  return next(req);
+  throw Error('No token retrived, please contact administrator');
 };
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, ApiModule],
-  providers: [provideHttpClient(withInterceptors([loggerInterceptor]))],
+  providers: [provideHttpClient(withInterceptors([tokenInterceptor]))],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

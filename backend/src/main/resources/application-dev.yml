@@ -12,35 +12,16 @@ spring:
         format_sql: true
     show-sql: true
     database: postgresql
-  mail:
-    host: localhost
-    port: 1025
-    username: rio
-    password: rio
-    properties:
-      mail:
-        smtp:
-          trust: "*"
-        auth: true
-        starttls:
-          enabled: true
-        connectiontimeout: 5000
-        timeout: 3000
-        writetimeout: 5000
   security:
     user:
       name: user
       password: password
-
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/book-social-network
+          
 application:
-  security:
-    jwt:
-      secret-key: eyJhbGciOiJIUzM4NCJ9eyJmdWxsTmFtZSI6InJpbyBwZXJtYW5hIiwic3ViIjoibWlvQG1haWwuY29tIiwiaWF0IjoxNzIxMDA2Mzk2LCJleHAiOjE3MjEwOTI3OTYsImF1dGhvcml0aWVzIjpbIlVTRVIiXX0ZZR6jlLMPZ7fZkcOf2B7FZIW4M
-      expiration: 8640000
-  mailing:
-    from: noreply@reeo.com
-    frontend:
-      confirmation-url: http://localhost:4200/auth/activate?t=
   file:
     uploads:
       photos-output-path: ./uploads

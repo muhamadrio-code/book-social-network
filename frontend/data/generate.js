@@ -172,7 +172,7 @@ function main() {
   const sl = synopses.length;
   const tl = titles.length;
 
-  for (let j = 0; j < 200000; j++) {
+  for (let j = 0; j < 2000; j++) {
     const created_by = Math.floor(Math.random() * 2) + 1;
     const createdDate = getRandomDate(
       new Date(2000, 0, 1),
@@ -187,7 +187,7 @@ function main() {
 
     data.push([
       `'${j + 1}'`,
-      `'${created_by}'`,
+      `'42d7dbec-4834-46eb-8c45-776d4cfc9c36'`,
       `'${createdDate}'`,
       `NULL`,
       `NULL`,
@@ -198,12 +198,11 @@ function main() {
       `true`,
       `'${synopsis}'`,
       `'${title}'`,
-      `'${owner_id}'`,
     ]);
   }
 
   const content = `
-  INSERT INTO book (id, created_by, created_date, last_modified_by, last_modified_date, archived, author_name, book_cover, isbn, shareable, synopsis, title, owner_id)
+  INSERT INTO book (id, created_by, created_date, last_modified_by, last_modified_date, archived, author_name, book_cover, isbn, shareable, synopsis, title)
   VALUES
   ${mapData(data)};
   `;
